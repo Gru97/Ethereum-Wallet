@@ -1,0 +1,281 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Wallet</title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="wallet.css" />
+    <script src="jquery-3.3.1.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+
+    <script src="web3.min.js"></script>
+    <script src="main.js"></script>
+    <script src="wallet.js"></script>
+
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="col-sm-12 table-bordered">
+
+            <p class="alert-info">This is a web-based wallet for ethereum and erc20 ethereum-based tokens. To proceed:</li>
+                <ul>
+                    <li> If you don't have a wallet, create one using <a>Create New Wallet</a> section. Save your address and private key since we don't store anything.</li>
+                    <li> If you already have a wallet (an account in methamask or myetherwallet, etc.) you can use your private key to unlock your account using <a>Unlock Wallet</a> and check you balance or see the transaction history.</li>
+                    <li> If you want to see information about a specific token you have in your account, or you want to transfer that custom token, use the token contract address in <a> Add Custom Token</a> section.</li>
+                    <li> Use the last two sections <a>Send Ether</a> and <a>Send Token</a> to transfer ether/token from the unlocked account to any other address.</li>
+                </ul>
+
+                <p class="alert-danger">This is a test wallet for learning purpose and I do not accept any resposibility for possible issues!</p>
+                <p class="alert-danger">Do not use this page with a browser that has metamask extention or use it in incognito mode.</p>
+                <p class="text-info">Everything in this page is on ropsten test net.</p>
+
+
+        </div>
+        <div class="col-sm-12 table-bordered">
+            <div class="row">
+                <h4 class="text-center">Create New Wallet</h4>
+            </div>
+
+            <div class="row paddingInput">
+                <label>Your Address: </label>
+                <h6 id="lblAccountAddress"></h6>
+            </div>
+
+            <div class="row paddingInput">
+                <label>Your Private Key: </label>
+                <h6 id="lblPrivateKey"></h6>
+            </div>
+
+            <div class="row text-center">
+                <button class="btn-success " id="btnCreateWallet">Create</button>
+            </div>
+            <br />
+            <br />
+            <div class="text-center displayNone" id="divAlert1">
+                <p class="alert-danger">Please save your password and account address somewhere safe.</p>
+            </div>
+
+        </div>
+
+        <div class="col-sm-12 table-bordered">
+            <div class="row text-center">
+                <h4>Unlock Your Wallet</h4>
+            </div>
+
+            <div class="row  text-center">
+                <label class="control-label">Enter Your Private Key: </label>
+
+            </div>
+            <div class="row text-center">
+                <input type="text" id="txtPrivateKey" />
+            </div>
+            <div class="row text-center">
+                <button id="btnUnlock" class="btn-success">Unlock</button>
+            </div>
+            <div class="text-center displayNone" id="divAlert2">
+                <p class="alert-danger">If you can't see your custom tokens, you should first add them in "Add Custom Token" section.</p>
+            </div>
+            <div class="row paddingInput" id="unlocked">
+                <div class="row">
+                    <label>address: </label>
+                    <span id="lblAddress"></span>
+                </div>
+                <div class="row" id="divBalances">
+                    <label>balance(ether): </label>
+                    <span id="lblEtherBalance"></span>
+                    <span id="lblTokenBalance"></span>
+                </div>
+                <div class="row table-responsive ">
+                    <label class="cursorPointer">History Of Transactions </label>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Tx Hash</th>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Block</th>
+                                <th>Value</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tblTxHistory">
+
+                        </tbody>
+
+                    </table>
+                </div>
+                <br />
+                <br />
+                <div class="row table-responsive">
+                    <label class="cursorPointer" id="lbltblTokenTxHistory">History Of ERC20 Token Transactions </label>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Tx Hash</th>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Block</th>
+                                <th>Value</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tblTokenTxHistory">
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 table-bordered">
+            <div class="row text-center">
+                <h4>Add Custom ERC20 Token</h4>
+            </div>
+            <div class="row text-center">
+                <label> Contract Address</label>
+
+            </div>
+            <div class="row text-center">
+                <input type="text" id="txtContractAddress" />
+            </div>
+            <div class="row text-center">
+                <button class="btn-success" id="btnAddToken">Add</button>
+            </div>
+            <div class="row paddingInput" id="tokenInfo">
+                <div class="row">
+                    <label>Token Name: </label>
+                    <span id="lblTokenName"></span>
+                </div>
+                <div class="row">
+                    <label>Token Symbol: </label>
+                    <span id="lblTokenSymbol"></span>
+                </div>
+                <div class="row">
+                    <label>Token decimals: </label>
+                    <span id="lblTokenDecimal"></span>
+                </div>
+                <div id="tokenAddResult">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12 table-bordered">
+            <div class="row text-center">
+                <h4>Send Ether</h4>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class=" form-group ">
+                        <label class="col-sm-2 control-label ">Private Key</label>
+                        <div class="col-sm-10 ">
+                            <input type="text " class="form-control " id="txtEtherPrivateKey" />
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label class="col-sm-2 control-label ">From</label>
+                        <div class="col-sm-10 ">
+                            <input type="text " class="form-control " id="txtEtherFromAddress" />
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label class="col-sm-2 control-label ">To</label>
+                        <div class="col-sm-10 ">
+                            <input type="text " class="form-control " id="txtEtherToAddress" />
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label class="col-sm-2 control-label ">Amount</label>
+                        <div class="col-sm-10 ">
+                            <input type="text " class="form-control " id="txtEtherAmount" placeholder="0 ether" />
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <label class="col-sm-2 control-label ">Transaction Fee</label>
+                        <div class="col-sm-10 ">
+                            <input class="form-control disabled " placeholder="0 " id="lblTansactionFee" />
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <button class="btn-success form-control" id="btnSendEther">Send</button>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <div class="col-sm-12 table-bordered ">
+            <div class="row text-center ">
+                <h4>Send Token</h4>
+            </div>
+
+            <div class="row">
+                <h5 class="paddingInput">Choose a token:</h5>
+                <ul id="lst">
+
+                </ul>
+            </div>
+            <div class="row ">
+                <div class="col-sm-12 ">
+                    <div class="form-group ">
+                        <label class="col-sm-2 control-label ">Private Key</label>
+                        <div class="col-sm-10 ">
+                            <input type="text " class="form-control " id="txtPrivateKey" />
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label class="col-sm-2 control-label ">From</label>
+                        <div class="col-sm-10 ">
+                            <input type="text " class="form-control " id="txtFromAddress" />
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label class="col-sm-2 control-label ">To</label>
+                        <div class="col-sm-10 ">
+                            <input type="text " class="form-control " id="txtToAddress" />
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label class="col-sm-2 control-label ">Amount</label>
+                        <div class="col-sm-10 ">
+                            <input type="text " class="form-control " id="txtTokenAmount" placeholder="0" />
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <label class="col-sm-2 control-label ">Transaction Fee</label>
+                        <div class="col-sm-10 ">
+                            <input class="form-control disabled " placeholder="0 " id="lblTansactionFee" />
+                        </div>
+                    </div>
+
+                    <div class="input-group ">
+                        <button class="btn-success form-control " id="btnSendToken">Send</button>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+    <div class="col-sm-12 text-center">
+        <p class="text-info">Done by: Fatemeh Shahidani</p>
+    </div>
+
+</body>
+
+</html>

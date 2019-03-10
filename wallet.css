@@ -1,0 +1,51 @@
+.paddingInput {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+}
+
+label {
+    word-wrap: break-word;
+}
+
+input {
+    width: 220px !important;
+    margin-bottom: 10px !important;
+    word-wrap: break-word;
+}
+
+button {
+    margin-bottom: 20px !important;
+}
+
+h4 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.center {
+    margin: 0 auto !important;
+}
+
+.cursorPointer {
+    cursor: pointer;
+}
+
+h6 {
+    word-wrap: break-word;
+}
+
+td,
+th {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 120px;
+}
+
+table {
+    table-layout: fixed;
+    overflow: scroll;
+}
+
+.displayNone {
+    display: none;
+}
